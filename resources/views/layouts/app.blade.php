@@ -21,6 +21,7 @@
             @include('inc.messages')
             @yield('content')
         </div>
+        @include('inc.f')
     </div>
 
     <!-- Scripts -->
