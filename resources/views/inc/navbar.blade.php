@@ -21,6 +21,7 @@
                             <a class="nav-link" href="{{ url('/services') }}">Services</a>
                           </li>
                           
+                          
 
                   </ul>
                   
@@ -40,15 +41,7 @@
                                
                           @endif
                       @else
-
-                      @if (Auth::user()->type == 'admin' )
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/control') }}">Control</a>
-                      </li> 
-                          @endif
-
                       
-             
                           <li class="nav-item dropdown">
                               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                   {{ Auth::user()->name }} <span class="caret"></span>
@@ -63,7 +56,11 @@
                                                    document.getElementById('logout-form').submit();">
                                       {{ __('Logout') }}
                                   </a>
-                                  
+                                  @if (Auth::user()->type == 'user' )
+                                  <a href="{{ url('/bedeveloperpage') }}" class="dropdown-item">Be Developer</a>  
+                                  @elseif  (Auth::user()->type == 'developer' )
+                                  <a href="/" class="dropdown-item">Control</a>
+                                  @endif
 
                                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                       @csrf
