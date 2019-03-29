@@ -20,6 +20,11 @@ Route::get('/', function () {
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
+Route::get('/control', 'PagesController@admincontrol');
+
+
 Auth::routes();
+
+Route::resource('/manageaccounts' , 'userscontroller');
 
 Route::get('/dashboard', 'DashboardController@index')->name('home');

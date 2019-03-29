@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PagesController extends Controller
+class PagesController extends Controller 
 {
     public function index(){
         $title = 'Welcome To SSD!';
@@ -23,5 +23,11 @@ class PagesController extends Controller
             'services' => ['Web Design', 'Programming', 'SEO']
         );
         return view('pages.services')->with($data);
+    }
+
+    public function admincontrol(){
+        
+        $title = 'AdminDashboard';
+        return view('pages.manageaccounts')->with('title', $title);
     }
 }
