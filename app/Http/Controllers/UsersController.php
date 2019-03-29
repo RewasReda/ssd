@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\user;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -83,7 +83,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $user->delete();
+        $user->forcedelete();
         return redirect('/manageaccounts')->with('success','account removed');
 
 

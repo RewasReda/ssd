@@ -28,6 +28,6 @@ class PagesController extends Controller
     public function admincontrol(){
         
         $title = 'AdminDashboard';
-        return view('pages.manageaccounts')->with('title', $title);
+        return view('pages.admincontrol')->with('title', $title);
     }
 }

@@ -25,6 +25,6 @@ Route::get('/control', 'PagesController@admincontrol');
 
 Auth::routes();
 
-Route::resource('/manageaccounts' , 'userscontroller');
+Route::resource('/manageaccounts' , 'UsersController');
 
 Route::get('/dashboard', 'DashboardController@index')->name('home');

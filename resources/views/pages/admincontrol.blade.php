@@ -14,6 +14,9 @@
                         </div>
                     @endif
 
+                    <a class="btn btn-primary btn-lg btn-block" href="{{ url('/manageaccounts') }}">manage accounts</a>
+                    <a class="btn btn-secondary btn-lg btn-block" href="#">manage games</a>
+
                 </div>
             </div>
         </div>

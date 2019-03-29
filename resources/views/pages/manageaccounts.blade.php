@@ -26,24 +26,10 @@
                                   <p class="card-text">email -->{{$user->email}}  <br />   account type --> {{$user->type}} </p>
 
 
-
-
-
-
-
-                                
-
-                           
-
-                               {!!Form::open(['url' =>['UsersController@destroy',$user->id],'method'=>'POST', 'class'=>'float-right'])!!}
+                               {!!Form::open(['action' =>['UsersController@destroy', $user->id],'method'=>'POST', 'class'=>'float-right'])!!}
                                 {{Form::hidden('_method','DELETE')}}
                                {{Form::submit('Delete',['class'=>'btn btn-danger'])}}
                                 {!!Form::close()!!}
-
-
-
-
-
 
                                 </div>
                                 <div class="card-footer text-muted">
@@ -53,6 +39,7 @@
 
 
                         @endforeach
+
                     @else 
                     <p>No accounts found</p>
                     @endif
