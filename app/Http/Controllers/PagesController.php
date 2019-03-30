@@ -38,7 +38,7 @@ class PagesController extends Controller
     public function devv (){
         auth()->user()->type='developer';
         auth()->user()->save();
-        return redirect('/')->with('success', 'Now Dev');
+        return redirect('/')->with('success', 'WELCOME TO OUR COMMUNITY .. now you are developer .. and we inform you that 30$ has deducted from your account ');
     }
     public function bedeveloperpage (){
         $title = 'Be Developer page';
