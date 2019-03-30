@@ -43,6 +43,11 @@
                           <li class="nav-item">
                               <a class="nav-link" href="{{ url('/services') }}">Services</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/contact') }}">Contact Us</a>
+                              </li>
+                              
                     @if (Auth::user()->type == 'user' )
                     <li class="nav-item">
                       <a class="nav-link" href="{{ url('/bedeveloperpage') }}">Be Developer</a>
