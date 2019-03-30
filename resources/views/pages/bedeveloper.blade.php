@@ -12,15 +12,15 @@ class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
       @if(user()->type == 'user' )
 
       {!! Form::open(['action' => 'PagesController@devv', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-        
+
       {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
   {!! Form::close() !!}
      {{ Form::close() }}
     </div>
     <div class="product-device box-shadow d-none d-md-block"></div>
     <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
-    
+
   </div>
- 
- 
-@endsection
+
+
+@endsection 

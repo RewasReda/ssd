@@ -22,6 +22,11 @@ Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 Route::get('/control', 'PagesController@admincontrol');
 
+Route::get('/bedeveloper', 'pagescontroller@bedeveloper');
+Route::get('/bedeveloper', 'pagescontroller@devv');
+Route::get('/bedeveloperpage', 'pagescontroller@bedeveloperpage');
+
+
 
 Auth::routes();
 

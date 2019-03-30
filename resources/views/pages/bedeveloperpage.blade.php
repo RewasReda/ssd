@@ -12,8 +12,8 @@ class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light"
     </div>
     <div class="product-device box-shadow d-none d-md-block"></div>
     <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
-    
+
   </div>
- 
- 
-@endsection
+
+
+@endsection 

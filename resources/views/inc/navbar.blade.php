@@ -11,16 +11,49 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/about') }}">About</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="{{ url('/services') }}">Services</a>
-                        </li>
+
+
+                    @guest
                         
+
+                    <li class="nav-item active">
+                            <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/about') }}">About</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{{ url('/services') }}">Services</a>
+                            </li>
+
+
+                    @else
+
+
+                    <li class="nav-item active">
+                            <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/about') }}">About</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{{ url('/services') }}">Services</a>
+                            </li>
+                    @if (Auth::user()->type == 'user' )
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url('/bedeveloperpage') }}">Be Developer</a>
+                    </li> 
+
+                @elseif (Auth::user()->type == 'developer' )
+                   <li class="nav-item">
+                    <a class="nav-link" href="#">Upload Game</a>
+                   </li> 
+               @endif  
+                
+                        
+                    @endguest
+
+
 
                 </ul>
                 
@@ -35,10 +68,9 @@
                         @if (Route::has('register'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                            
-                             
+                            </li>  
                         @endif
+
                     @else
 
                     @if (Auth::user()->type == 'admin' )
@@ -46,9 +78,6 @@
                       <a class="nav-link" href="{{ url('/control') }}">Control</a>
                     </li> 
                         @endif
-
-                    
-           
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
@@ -63,7 +92,6 @@
                                                  document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-                                
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf

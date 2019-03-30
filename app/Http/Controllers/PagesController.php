@@ -30,4 +30,19 @@ class PagesController extends Controller
         $title = 'AdminDashboard';
         return view('pages.admincontrol')->with('title', $title);
     }
+
+    public function bedeveloper (){
+        $title = 'Be Developer';
+        return view('pages.bedeveloper')->with('title', $title);
+    }
+    public function devv (){
+        auth()->user()->type='developer';
+        auth()->user()->save();
+        return redirect('/')->with('success', 'Now Dev');
+    }
+    public function bedeveloperpage (){
+        $title = 'Be Developer page';
+        return view('pages.bedeveloperpage')->with('title', $title);
+    }
+    
 }
