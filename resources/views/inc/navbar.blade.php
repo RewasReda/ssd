@@ -23,10 +23,13 @@
                           
                             <a class="nav-link" href="{{ url('/about') }}">About</a>
                           </li>
-                          
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/contact') }}">Contact Us</a>
-                              </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/contact') }}">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/games') }}">Games</a>
+                        </li>
 
 
                     @else
@@ -42,7 +45,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/contact') }}">Contact Us</a>
                               </li>
-                              
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/games') }}">Games</a>
+                        </li>
+
+
                     @if (Auth::user()->type == 'user' )
                     <li class="nav-item">
                       <a class="nav-link" href="{{ url('/bedeveloperpage') }}">Be Developer</a>
@@ -50,7 +57,7 @@
 
                 @elseif (Auth::user()->type == 'developer' )
                    <li class="nav-item">
-                    <a class="nav-link" href="#">Upload Game</a>
+                    <a class="nav-link" href="/games/create">Upload Game</a>
                    </li> 
                @endif  
                 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Game;
 
 class GamesController extends Controller
 {
@@ -14,7 +15,8 @@ class GamesController extends Controller
     public function index()
     {
         //
-        return view ('games.index');
+        $games = Game::orderBy('created_at','desc')->paginate(10);
+        return view('games.index')->with('games', $games);
     }
 
     /**
@@ -25,6 +27,7 @@ class GamesController extends Controller
     public function create()
     {
         //
+        return view('games.create');
     }
 
     /**
@@ -36,6 +39,35 @@ class GamesController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+//            'cover_image' => 'image|nullable|max:1999'
+        ]);
+        // Handle File Upload
+//        if($request->hasFile('cover_image')){
+//            // Get filename with the extension
+//            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+//            // Get just filename
+//            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+//            // Get just ext
+//            $extension = $request->file('cover_image')->getClientOriginalExtension();
+//            // Filename to store
+//            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+//            // Upload Image
+//            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+//        } else {
+//            $fileNameToStore = 'noimage.jpg';
+//        }
+        // Create game
+        $game = new game;
+        $game->title = $request->input('title');
+        $game->body = $request->input('body');
+        $game->category = $request->input('category');
+//        $game->user_id = auth()->user()->id;
+//        $game->cover_image = $fileNameToStore;
+        $game->save();
+        return redirect('/games')->with('success', 'game Added');
     }
 
     /**
@@ -47,6 +79,9 @@ class GamesController extends Controller
     public function show($id)
     {
         //
+        $game = Game::find($id);
+        return view('games.show')->with('game', $game);
+
     }
 
     /**
@@ -58,6 +93,12 @@ class GamesController extends Controller
     public function edit($id)
     {
         //
+        $game = Game::find($id);
+        // Check for correct user
+//        if(auth()->user()->id !==$game->user_id){
+//            return redirect('/games')->with('error', 'Unauthorized Page');
+//        }
+        return view('games.edit')->with('game', $game);
     }
 
     /**
@@ -70,6 +111,34 @@ class GamesController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+        'title' => 'required',
+        'body' => 'required'
+    ]);
+         // Handle File Upload
+//        if($request->hasFile('cover_image')){
+//            // Get filename with the extension
+//            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+//            // Get just filename
+//            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+//            // Get just ext
+//            $extension = $request->file('cover_image')->getClientOriginalExtension();
+//            // Filename to store
+//            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+//            // Upload Image
+//            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+//        }
+        // Create game
+        $game = Game::find($id);
+        $game->title = $request->input('title');
+        $game->body = $request->input('body');
+        $game->category = $request->input('category');
+//        if($request->hasFile('cover_image')){
+//            $game->cover_image = $fileNameToStore;
+//        }
+        $game->save();
+        return redirect('/games')->with('success', 'Game Updated');
+
     }
 
     /**
@@ -81,5 +150,17 @@ class GamesController extends Controller
     public function destroy($id)
     {
         //
+        $game = Game::find($id);
+        // Check for correct user
+//        if(auth()->user()->id !==$game->user_id){
+//            return redirect('/games')->with('error', 'Unauthorized Page');
+//        }
+//        if($game->cover_image != 'noimage.jpg'){
+//            // Delete Image
+//            Storage::delete('public/cover_images/'.$game->cover_image);
+//        }
+
+        $game->delete();
+        return redirect('/games')->with('success', 'game Removed');
     }
 }

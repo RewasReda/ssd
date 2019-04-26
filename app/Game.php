@@ -8,7 +8,7 @@ class Game extends Model
 {
     //
     // Table Name
-    protected $table = 'gamess';
+    protected $table = 'games';
     // Primary Key
     public $primaryKey = 'id';
     // Timestamps
