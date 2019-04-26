@@ -12,12 +12,18 @@ class GamesController extends Controller
      *..
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     public function index()
     {
         //
         $games = Game::orderBy('created_at','desc')->paginate(10);
         return view('games.index')->with('games', $games);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -27,6 +33,9 @@ class GamesController extends Controller
     public function create()
     {
         //
+        if(auth()->user()->type !=='developer'){
+            return redirect('/games')->with('error', 'Unauthorized Page');
+        }
         return view('games.create');
     }
 
@@ -64,7 +73,7 @@ class GamesController extends Controller
         $game->title = $request->input('title');
         $game->body = $request->input('body');
         $game->category = $request->input('category');
-//        $game->user_id = auth()->user()->id;
+        $game->user_id = auth()->user()->id;
 //        $game->cover_image = $fileNameToStore;
         $game->save();
         return redirect('/games')->with('success', 'game Added');
@@ -95,9 +104,9 @@ class GamesController extends Controller
         //
         $game = Game::find($id);
         // Check for correct user
-//        if(auth()->user()->id !==$game->user_id){
-//            return redirect('/games')->with('error', 'Unauthorized Page');
-//        }
+        if(auth()->user()->id !==$game->user_id){
+            return redirect('/games')->with('error', 'Unauthorized Page');
+        }
         return view('games.edit')->with('game', $game);
     }
 
@@ -152,15 +161,15 @@ class GamesController extends Controller
         //
         $game = Game::find($id);
         // Check for correct user
-//        if(auth()->user()->id !==$game->user_id){
-//            return redirect('/games')->with('error', 'Unauthorized Page');
-//        }
+        if(auth()->user()->id !==$game->user_id){
+            return redirect('/games')->with('error', 'Unauthorized Page');
+        }
 //        if($game->cover_image != 'noimage.jpg'){
 //            // Delete Image
 //            Storage::delete('public/cover_images/'.$game->cover_image);
 //        }
 
         $game->delete();
-        return redirect('/games')->with('success', 'game Removed');
+        return redirect('/games')->with('success', 'Game Removed');
     }
 }
