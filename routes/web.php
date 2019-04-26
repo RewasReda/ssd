@@ -34,4 +34,6 @@ Route::post('/contact', 'ContactFormController@store');
 
 Route::resource('/manageaccounts' , 'UsersController');
 
+Route::resource('/games' , 'GamesController');
+
 Route::get('/dashboard', 'DashboardController@index')->name('home');
