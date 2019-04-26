@@ -4,8 +4,8 @@
 @section('content')
     <h1>{{$game->title}}</h1>
     <h5>{{$game->category}}</h5>
-{{--    <img style="width:50% ;height 10%" src="/storage/cover_images/{{$game->cover_image}}">--}}
-{{--    <br><br>--}}
+    <img style="width:50% ;height 10%" src="/storage/cover_images/{{$game->cover_image}}">
+    <br><br>
 
     <small>Uploaded At {{$game->created_at}}</small>
 

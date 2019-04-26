@@ -16,9 +16,9 @@
         {{Form::label('body', 'Description')}}
         {{Form::textarea('body', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Description Text'])}}
     </div>
-{{--    <div class="form-group">--}}
-{{--        {{Form::file('cover_image')}}--}}
-{{--    </div>--}}
+    <div class="form-group">
+        {{Form::file('cover_image')}}
+    </div>
     {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
 @endsection
