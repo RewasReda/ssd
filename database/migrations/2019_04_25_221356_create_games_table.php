@@ -15,10 +15,12 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->bigIncrements('id');
-            // $table->integer('user_id');
+            $table->integer('user_id');
             $table->string('title');
             $table->mediumText('body');
-            // $table->string('cover_image');
+            $table->string('cover_image');
+            $table->string('category');
+            $table->integer('approve')->default(0);
             $table->timestamps();
         });
     }
