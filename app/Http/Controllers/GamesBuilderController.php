@@ -43,6 +43,7 @@ class GamesBuilderController extends Controller
         ]);
 
     
+        // ...
         $gametitle = new GamesTitleController;
         $game = $gametitle->store($request,$game);
         $Category = new GamesCategoryController;
