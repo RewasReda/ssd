@@ -36,5 +36,6 @@ Route::resource('/manageaccounts' , 'UsersController');
 Route::resource('/managegames' , 'ManageGamesController');
 
 Route::resource('/games' , 'GamesController');
+// Route::resource('/managegames' , 'GamesController@managgames');
 
 Route::get('/dashboard', 'DashboardController@index')->name('home');

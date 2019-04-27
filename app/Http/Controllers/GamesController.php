@@ -24,7 +24,6 @@ class GamesController extends Controller
         return view('games.index')->with('games', $games);
     }
 
-
     /**
      * Show the form for creating a new resource.
      *

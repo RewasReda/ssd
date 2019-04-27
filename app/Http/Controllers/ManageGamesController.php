@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Game;
 
 class ManageGamesController extends Controller
 {
@@ -15,9 +16,10 @@ class ManageGamesController extends Controller
     public function index()
     {
         //
-        $users = User::all();
-        return view('pages.managegames')->with('users',$users);
-        
+        // $users = User::all();
+        // return view('pages.managegames')->with('users',$users);
+        $games = Game::orderBy('created_at','desc')->paginate(10);
+        return view('pages.managegames')->with('games', $games);
     }
 
     /**
