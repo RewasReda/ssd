@@ -33,5 +33,6 @@ Route::get('/contact', 'ContactFormController@create');
 Route::post('/contact', 'ContactFormController@store');
 
 Route::resource('/manageaccounts' , 'UsersController');
+Route::resource('/managegames' , 'ManageGamesController');
 
 Route::get('/dashboard', 'DashboardController@index')->name('home');
