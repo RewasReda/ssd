@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Game;
+use App\Http\Controllers\GamesBuilderController;
 
 class GamesController extends Controller
 {
@@ -45,36 +46,12 @@ class GamesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,game $game)
     {
-        //
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-            'cover_image' => 'image|nullable|max:1999'
-        ]);
-//         Handle File Upload
-        if($request->hasFile('cover_image')){
-            // Get filename with the extension
-            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('cover_image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'noimage.jpg';
-        }
-        // Create game
+        
         $game = new game;
-        $game->title = $request->input('title');
-        $game->body = $request->input('body');
-        $game->category = $request->input('category');
-        $game->user_id = auth()->user()->id;
-        $game->cover_image = $fileNameToStore;
+        $gamebuilder = new GamesBuilderController;
+        $game = $gamebuilder->store($request , $game);
         $game->save();
         return redirect('/games')->with('success', 'game Added');
     }
