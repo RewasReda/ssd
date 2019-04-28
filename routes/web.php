@@ -41,3 +41,11 @@ Route::resource('/games' , 'GamesController');
 // Route::resource('/managegames' , 'GamesController@managgames');
 
 Route::get('/dashboard', 'DashboardController@index')->name('home');
+
+Route::get('form',function(){
+    return view('form');
+});
+
+
+
+Route::post('addToCart','GamesController@add_to_cart');

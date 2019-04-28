@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Game;
 use Storage;
 use App\Http\Controllers\GamesBuilderController;
-
+use Auth;
+use App\cart;
 
 
 class GamesController extends Controller
@@ -154,4 +155,25 @@ class GamesController extends Controller
         $game->delete();
         return redirect('/games')->with('success', 'Game Removed');
     }
+
+
+
+    public function add_to_cart(Request $request){
+        $allData = $request->all();
+        dd($allData);
+        foreach($allData as $oneSelect=>$value){
+            if(is_numeric($oneSelect)){
+                cart::create([
+                    'user_id'=>Auth::User()->id,
+                    'game_id'=>$oneSelect
+                ]);
+            }
+        }
+        return back();
+    }
+
+
+
+
+
 }
