@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Review;
 use Illuminate\Http\Request;
 use App\Game;
 use App\Http\Controllers\GamesBuilderController;
@@ -67,7 +68,9 @@ class GamesController extends Controller
     {
         //
         $game = Game::find($id);
-        return view('games.show')->with('game', $game);
+        $reviews = Review::orderBy('created_at','desc')->paginate(10);
+        return view('games.show')->with('game', $game)->with('reviews',$reviews);
+//        return view('games.show')->with('game', $game);
 
     }
 
