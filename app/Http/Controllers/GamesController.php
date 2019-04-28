@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Game;
+use Storage;
 use App\Http\Controllers\GamesBuilderController;
 
 class GamesController extends Controller
