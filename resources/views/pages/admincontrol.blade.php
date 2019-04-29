@@ -16,8 +16,9 @@
 
                    
                     <a class="btn btn-primary btn-lg btn-block" href="{{ url('/manageaccounts') }}">manage accounts</a>
-                    <a class="btn btn-primary btn-lg btn-block" href="{{ url('/games/indexAdmin') }}">manage games</a>
-                    <a class="btn btn-secondary btn-lg btn-block" href="{{ url('/approvegames') }}">approve developers games</a>
+                    <a class="btn btn-primary btn-lg btn-block" href="{{ url('/games/1/indexAdmin') }}">manage games</a>
+                    <a class="btn btn-secondary btn-lg btn-block" href="{{ url('/games/0/indexAdmin') }}">approve developers games</a>
+                    {{-- <a class="btn btn-secondary btn-lg btn-block" href="{{ url('/approvegames') }}">approve developers games</a> --}}
                     <a class="btn btn-secondary btn-lg btn-block" href="{{ url('/games/create') }}">add games</a>
 
                 </div>

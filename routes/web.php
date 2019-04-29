@@ -40,7 +40,10 @@ Route::resource('/managegames' , 'ManageGamesController');
 Route::get('/games/indexAdmin' , 'GamesController@indexAdmin');
 // Route::get('/games/createAdmin' , 'GamesController@createAdmin');
 // Route::get('/games/create' , 'GamesController@create');
-Route::get('/approvegames' , 'GamesController@approvegame');
+//Route::get('/approvegames' , 'GamesController@approvegame');
+
+Route::get('/games/{flag}/indexAdmin', ['as' => 'indexAdmin', 'uses' => 'GamesController@indexAdmin']);
+
 
 Route::post('destroyAdmin/{id}', ['as' => 'destroyAdmin', 'uses' => 'GamesController@destroyAdmin']);
 Route::post('approve/{id}', ['as' => 'approvegames', 'uses' => 'GamesController@approve']);

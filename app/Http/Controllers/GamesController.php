@@ -8,11 +8,27 @@ use App\Game;
 use Storage;
 use App\Http\Controllers\GamesBuilderController;
 use App\classes\CreateFacade;
+use App\classes\GamesFactory;
+
 
 
 
 class GamesController extends Controller
 {
+
+    public function add_to_cart(Request $request){
+        $allData = $request->all();
+        dd($allData);
+        foreach($allData as $oneSelect=>$value){
+            if(is_numeric($oneSelect)){
+                cart::create([
+                    'user_id'=>Auth::User()->id,
+                    'game_id'=>$oneSelect
+                ]);
+            }
+        }
+        return back();
+    }
     /**
      * Display a listing of the resource.
      *..
@@ -29,12 +45,7 @@ class GamesController extends Controller
         $games = Game::orderBy('created_at','desc')->paginate(10);
         return view('games.index')->with('games', $games);
     }
-    public function indexAdmin()
-    {
- 
-        $games = Game::where('approve','=',1)->get();
-        return view('pages.managegames')->with('games', $games);
-    }
+    
 
     //    public function index()
     // {
@@ -203,15 +214,30 @@ class GamesController extends Controller
 
         $game->approve = 1;
         $game->save();
-        return redirect('/approvegames')->with('success', 'Game approved');
+        return redirect('/games/0/indexAdmin')->with('success', 'Game approved');
     }
 
-    public function approvegame (){
-        // $title = 'Approve games';
-        // return view('pages.approvegames')->with('title', $title);
+    // public function approvegame (){
+    //     // $title = 'Approve games';
+    //     // return view('pages.approvegames')->with('title', $title);
 
-        //$games = Game::all();
-        $games = Game::where('approve','=',0)->get();
-        return view('pages.approvegames')->with('games',$games);
+    //     //$games = Game::all();
+    //     $games = Game::where('approve','=',0)->get();
+    //     return view('pages.approvegames')->with('games',$games);
+    // }
+    // public function indexAdmin()
+    // {
+ 
+    //     $games = Game::where('approve','=',1)->get();
+    //     return view('pages.managegames')->with('games', $games);
+    // }
+
+    public function indexAdmin($flag)
+    {
+      
+        $gamesfactory = new GamesFactory;
+        $showgame = $gamesfactory->gettype($flag);
+        return $showgame->games();
+        
     }
 }
