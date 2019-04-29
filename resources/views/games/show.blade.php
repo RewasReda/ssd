@@ -18,10 +18,10 @@
     <hr>
     <a href="/games" class="btn btn-primary">Go Back</a>
     <hr>
-     <div class="row">
+     {{-- <div class="row">
         <div class="col-md-8 col-md-offset-2">
-                {!! Form::open(['action' => 'ReviewController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-            <div  class="row">
+                {!! Form::open(['action' => 'ReviewController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} --}}
+            {{-- <div  class="row">
                     <div  class="col-md-6">
                         {{Form::label('name', 'Name')}}
                         {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Name'])}}
@@ -36,19 +36,19 @@
                     <div class="col-md-12">
                         {{Form::label('body', 'Review')}}
                         {{Form::textarea('body', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Review Text'])}}
-                    </div>
-                    <div class="col-md-6">
+                    </div> --}}
+                    {{-- <div class="col-md-6">
                         {{Form::hidden('game_id',$game->id,['class'=>'form-control'])}}
-                    </div>
-                <div style="margin-top:15px;">
+                    </div> --}}
+                {{-- <div style="margin-top:15px;">
                     {{Form::submit('Add Review', ['class'=>'btn btn-primary'])}}
-                </div>
-            </div>
+                </div> --}}
+            {{-- </div> --}}
 
-                {!! Form::close() !!}
-        </div>
+                {{-- {!! Form::close() !!} --}}
+        {{-- </div>
      </div>
-        <br><br>
+        <br><br> --}}
 
         @if(!Auth::guest())
             @if(Auth::user()->id == $game->user_id)
@@ -61,31 +61,31 @@
             @endif
         @endif
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <h3 class="comment-title"><span class="glyphicon glyphicon-comment"></span> {{$game->review}} Reviews</h3>
 {{--            @foreach($game->reviews as $key => $value)--}}
-            @foreach ($reviews as $review)
-                @if($review->game_id==$game->id)
-                    <div class="comment">
-                        <div class="row">
-                            <div class="author-info">
-                                <div class="col-md-9">
-                                    <div class="author-name">
-                                        <h4>{{$review->name}}</h4>
-                                        <p class="author-time">{{$review->created_at}}</p>
-                                    </div>
-                                </div>
+            {{-- @foreach ($reviews as $review) --}}
+                {{-- @if($review->game_id==$game->id) --}}
+                    {{-- <div class="comment"> --}}
+                        {{-- <div class="row"> --}}
+                            {{-- <div class="author-info"> --}}
+                                {{-- <div class="col-md-9"> --}}
+                                    {{-- <div class="author-name"> --}}
+                                        {{-- <h4>{{$review->name}}</h4> --}}
+                                        {{-- <p class="author-time">{{$review->created_at}}</p> --}}
+                                    {{-- </div> --}}
+                                {{-- </div>
                             </div>
-                        </div>
-                        <div class="comment-content">
-                            {!!$review->body!!}
-                        </div>
+                        </div> --}}
+                        {{-- <div class="comment-content">
+                            {!!$review->body!!} --}}
+                        {{-- </div> --}}
+                    {{-- </br>
                     </br>
-                    </br>
-                    </div>
-                @endif
-            @endforeach
-        </div>
-    </div>
+                    </div> --}}
+                {{-- @endif --}}
+            {{-- @endforeach --}}
+        {{-- </div>
+    </div> --}}
     @endsection
