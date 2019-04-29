@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Game;
+use Storage;
 
 class ManageGamesController extends Controller
 {
@@ -15,10 +16,8 @@ class ManageGamesController extends Controller
      */
     public function index()
     {
-        //
-        // $users = User::all();
-        // return view('pages.managegames')->with('users',$users);
-        $games = Game::orderBy('created_at','desc')->paginate(10);
+ 
+        $games = Game::where('approve','=',1)->get();
         return view('pages.managegames')->with('games', $games);
     }
 
@@ -30,6 +29,12 @@ class ManageGamesController extends Controller
     public function create()
     {
         //
+        if(auth()->user()->type !=='admin'){
+            return redirect('/games')->with('error', 'Unauthorized Page');
+        }
+        
+
+        return view('games.create');
     }
 
     /**
@@ -86,9 +91,19 @@ class ManageGamesController extends Controller
     public function destroy($id)
     {
         //
-        $user = User::find($id);
-        $user->forcedelete();
-        return redirect('/managegames')->with('success','account removed');
+        // $user = ::find($id);
+        // $user->forcedelete();
+        // return redirect('/managegames')->with('success','Game removed');
+        $game = Game::find($id);
+        // Check for correct user
+        
+        if($game->cover_image != 'noimage.jpg'){
+            // Delete Image
+            Storage::delete('public/cover_images/'.$game->cover_image);
+        }
+
+        $game->delete();
+        return redirect('/games')->with('success', 'Game Removed');
 
     }
 }

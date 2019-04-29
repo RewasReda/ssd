@@ -35,9 +35,30 @@ Route::post('/contact', 'ContactFormController@store');
 Route::resource('/manageaccounts' , 'UsersController');
 Route::resource('/managegames' , 'ManageGamesController');
 
-Route::POST('review/store','ReviewController@store');
+// Route::POST('review/store','ReviewController@store');
+
+Route::get('/games/indexAdmin' , 'GamesController@indexAdmin');
+// Route::get('/games/createAdmin' , 'GamesController@createAdmin');
+// Route::get('/games/create' , 'GamesController@create');
+//Route::get('/approvegames' , 'GamesController@approvegame');
+
+Route::get('/games/{flag}/indexAdmin', ['as' => 'indexAdmin', 'uses' => 'GamesController@indexAdmin']);
+
+
+Route::post('destroyAdmin/{id}', ['as' => 'destroyAdmin', 'uses' => 'GamesController@destroyAdmin']);
+Route::post('approve/{id}', ['as' => 'approvegames', 'uses' => 'GamesController@approve']);
+
+
 
 Route::resource('/games' , 'GamesController');
 // Route::resource('/managegames' , 'GamesController@managgames');
 
 Route::get('/dashboard', 'DashboardController@index')->name('home');
+
+Route::get('form',function(){
+    return view('form');
+});
+
+
+
+Route::post('addToCart','GamesController@add_to_cart');

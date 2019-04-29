@@ -71,9 +71,11 @@ class Games_User_id_Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,  game $game)
     {
-        //
+        $game->user_id = auth()->user()->id;
+        return  $game;
+
     }
 
     /**

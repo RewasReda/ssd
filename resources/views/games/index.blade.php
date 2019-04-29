@@ -1,10 +1,17 @@
 @extends('layouts.app')
 
-
+<style>
+.big_check{
+    width:30px;
+    height:30px;
+}
+</style>
 @section('content')
     <h1>this is games</h1>
     @if (count ($games) > 0)
-
+        <form action="/addToCart" method="POST">
+            
+            @csrf
         @foreach ($games as $game)
             <div class="card card-body bg-light">
                 <div class="card card-body bg-light">
@@ -15,11 +22,14 @@
                         <h3><a href="/games/{{$game->id}}">{{$game->title}}</a></h3>
                         <small>Written on {{$game->created_at}} by {{$game->user->name}}</small>
                     </div>
-
                 </div>
-
+                <div>
+                    <input name = {{ $game->id }} type="checkbox" class="big_check">
+                </div>
             </div>
         @endforeach
+            <button type ="submit" class="btn btn-primary">Finish Request</button>
+        </form>
         {{$games->links()}}
 
     @else

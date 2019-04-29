@@ -88,9 +88,24 @@ class GamesBuilderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, game $game)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
+        ]);   
+        $gametitle = new GamesTitleController;
+        $game = $gametitle->update($request,  $game);
+        $Category = new GamesCategoryController;
+        $game = $Category->update($request,  $game);
+        $CoverImage = new GamesCOVERIMAGEController;
+        $game = $CoverImage->update($request,  $game);
+        $Body = new GamesBodyController;
+        $game = $Body->update($request, $game);
+        $userid = new Games_User_id_Controller;
+        $game = $userid->update($request, $game);
+        
+        return $game ;
     }
 
     /**

@@ -7,11 +7,28 @@ use Illuminate\Http\Request;
 use App\Game;
 use Storage;
 use App\Http\Controllers\GamesBuilderController;
+use App\classes\CreateFacade;
+use App\classes\GamesFactory;
+
 
 
 
 class GamesController extends Controller
 {
+
+    public function add_to_cart(Request $request){
+        $allData = $request->all();
+        dd($allData);
+        foreach($allData as $oneSelect=>$value){
+            if(is_numeric($oneSelect)){
+                cart::create([
+                    'user_id'=>Auth::User()->id,
+                    'game_id'=>$oneSelect
+                ]);
+            }
+        }
+        return back();
+    }
     /**
      * Display a listing of the resource.
      *..
@@ -28,19 +45,49 @@ class GamesController extends Controller
         $games = Game::orderBy('created_at','desc')->paginate(10);
         return view('games.index')->with('games', $games);
     }
+    
+
+    //    public function index()
+    // {
+    //     $createFactory = new CreateFactory;
+    //     $creategame = $createFactory->gettype(auth()->user()->type);
+    //     $creategame->showgame();
+    // } 
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    // public function create()
+    // {
+    //     //
+    //     if(auth()->user()->type !=='developer'){
+    //         return redirect('/games')->with('error', 'Unauthorized Page');
+    //     }
+        
+
+    //     return view('games.create');
+    // }
+
+    // public function createAdmin()
+    // {
+    //     //
+    //     if(auth()->user()->type !=='admin'){
+    //         return redirect('/games')->with('error', 'Unauthorized Page');
+    //     }
+        
+
+    //     return view('games.create');
+    // }
+
+        public function create()
     {
-        //
-        if(auth()->user()->type !=='developer'){
-            return redirect('/games')->with('error', 'Unauthorized Page');
-        }
-        return view('games.create');
+      
+        $createfacade = new CreateFacade;
+        $creategame = $createfacade->gettype(auth()->user()->type);
+        return $creategame->addgame();
+        
     }
 
     /**
@@ -55,6 +102,8 @@ class GamesController extends Controller
         $game = new game;
         $gamebuilder = new GamesBuilderController;
         $game = $gamebuilder->store($request , $game);
+        if(auth()->user()->type =='admin')
+        $game->approve=1;
         $game->save();
         return redirect('/games')->with('success', 'game Added');
     }
@@ -69,9 +118,9 @@ class GamesController extends Controller
     {
         //
         $game = Game::find($id);
-        $reviews = Review::orderBy('created_at','desc')->paginate(10);
-        return view('games.show')->with('game', $game)->with('reviews',$reviews);
-//        return view('games.show')->with('game', $game);
+        // $reviews = Review::orderBy('created_at','desc')->paginate(10);
+        // return view('games.show')->with('game', $game)->with('reviews',$reviews);
+       return view('games.show')->with('game', $game);
 
     }
 
@@ -101,32 +150,12 @@ class GamesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $this->validate($request, [
-        'title' => 'required',
-        'body' => 'required'
-    ]);
-         // Handle File Upload
-        if($request->hasFile('cover_image')){
-            // Get filename with the extension
-            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('cover_image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
-        }
+        
         // Create game
         $game = Game::find($id);
-        $game->title = $request->input('title');
-        $game->body = $request->input('body');
-        $game->category = $request->input('category');
-        if($request->hasFile('cover_image')){
-            $game->cover_image = $fileNameToStore;
-        }
+         $gamebuilder = new GamesBuilderController;
+
+        $game = $gamebuilder->update($request ,$game);
         $game->save();
         return redirect('/games')->with('success', 'Game Updated');
 
@@ -143,7 +172,7 @@ class GamesController extends Controller
         //
         $game = Game::find($id);
         // Check for correct user
-        if(auth()->user()->id !==$game->user_id){
+        if(auth()->user()->id !==$game->user_id || auth()->user()->type !== "admin"){
             return redirect('/games')->with('error', 'Unauthorized Page');
         }
         if($game->cover_image != 'noimage.jpg'){
@@ -153,5 +182,62 @@ class GamesController extends Controller
 
         $game->delete();
         return redirect('/games')->with('success', 'Game Removed');
+    }
+
+    public function destroyAdmin($id)
+    {
+        //
+        // $user = ::find($id);
+        // $user->forcedelete();
+        // return redirect('/managegames')->with('success','Game removed');
+        $game = Game::find($id);
+        // Check for correct user
+        
+        if($game->cover_image != 'noimage.jpg'){
+            // Delete Image
+            Storage::delete('public/cover_images/'.$game->cover_image);
+        }
+
+        $game->delete();
+        return redirect('/games')->with('success', 'Game Removed');
+
+    }
+
+    public function approve($id)
+    {
+        //
+        $game = Game::find($id);
+        // Check for correct user
+        if(auth()->user()->type !== 'admin'){
+            return redirect('/games')->with('error', 'Unauthorized Page');
+        }
+
+        $game->approve = 1;
+        $game->save();
+        return redirect('/games/0/indexAdmin')->with('success', 'Game approved');
+    }
+
+    // public function approvegame (){
+    //     // $title = 'Approve games';
+    //     // return view('pages.approvegames')->with('title', $title);
+
+    //     //$games = Game::all();
+    //     $games = Game::where('approve','=',0)->get();
+    //     return view('pages.approvegames')->with('games',$games);
+    // }
+    // public function indexAdmin()
+    // {
+ 
+    //     $games = Game::where('approve','=',1)->get();
+    //     return view('pages.managegames')->with('games', $games);
+    // }
+
+    public function indexAdmin($flag)
+    {
+      
+        $gamesfactory = new GamesFactory;
+        $showgame = $gamesfactory->gettype($flag);
+        return $showgame->games();
+        
     }
 }
