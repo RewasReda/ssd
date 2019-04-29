@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Review;
 use Illuminate\Http\Request;
 use App\Game;
 use Storage;
 use App\Http\Controllers\GamesBuilderController;
-use Storage;
+use Auth;
+use App\cart;
 
 
 class GamesController extends Controller
@@ -68,7 +70,9 @@ class GamesController extends Controller
     {
         //
         $game = Game::find($id);
-        return view('games.show')->with('game', $game);
+        $reviews = Review::orderBy('created_at','desc')->paginate(10);
+        return view('games.show')->with('game', $game)->with('reviews',$reviews);
+//        return view('games.show')->with('game', $game);
 
     }
 
@@ -151,4 +155,25 @@ class GamesController extends Controller
         $game->delete();
         return redirect('/games')->with('success', 'Game Removed');
     }
+
+
+
+    public function add_to_cart(Request $request){
+        $allData = $request->all();
+        dd($allData);
+        foreach($allData as $oneSelect=>$value){
+            if(is_numeric($oneSelect)){
+                cart::create([
+                    'user_id'=>Auth::User()->id,
+                    'game_id'=>$oneSelect
+                ]);
+            }
+        }
+        return back();
+    }
+
+
+
+
+
 }
