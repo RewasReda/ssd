@@ -35,7 +35,7 @@ Route::post('/contact', 'ContactFormController@store');
 Route::resource('/manageaccounts' , 'UsersController');
 Route::resource('/managegames' , 'ManageGamesController');
 
-// Route::POST('review/store','ReviewController@store');
+ Route::POST('review/store','ReviewController@store');
 
 Route::get('/games/indexAdmin' , 'GamesController@indexAdmin');
 // Route::get('/games/createAdmin' , 'GamesController@createAdmin');

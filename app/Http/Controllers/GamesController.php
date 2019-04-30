@@ -118,9 +118,9 @@ class GamesController extends Controller
     {
         //
         $game = Game::find($id);
-        // $reviews = Review::orderBy('created_at','desc')->paginate(10);
-        // return view('games.show')->with('game', $game)->with('reviews',$reviews);
-       return view('games.show')->with('game', $game);
+         $reviews = Review::orderBy('created_at','desc')->paginate(10);
+         return view('games.show')->with('game', $game)->with('reviews',$reviews);
+//       return view('games.show')->with('game', $game);
 
     }
 
