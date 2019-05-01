@@ -72,6 +72,10 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
+                    <form class="form-inline" action= "{{ url('/search') }}" method = "get" role="search">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
+                        <button class="btn btn-outline-light" type="submit">Search</button>
+                      </form>
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route ('login') }}">{{ __('Login') }}</a>
@@ -113,5 +117,6 @@
                     @endguest
                 </ul>
             </div>
+            
         </div>
     </nav>

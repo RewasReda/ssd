@@ -46,7 +46,13 @@ class GamesController extends Controller
         return view('games.index')->with('games', $games);
     }
     
-
+    public function search(Request $request)
+    {
+        //
+        $search= $request->get('search');
+        $games = Game::where('title','like','%'.$search.'%')->paginate(5);
+        return view('games.index')->with('games', $games);
+    }
     //    public function index()
     // {
     //     $createFactory = new CreateFactory;

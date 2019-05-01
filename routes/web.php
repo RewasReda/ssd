@@ -26,7 +26,7 @@ Route::get('/bedeveloper', 'pagescontroller@bedeveloper');
 Route::get('/bedeveloper', 'pagescontroller@devv');
 Route::get('/bedeveloperpage', 'pagescontroller@bedeveloperpage');
 
-
+Route::get('/search', 'GamesController@search');
 
 Auth::routes();
 Route::get('/contact', 'ContactFormController@create');
