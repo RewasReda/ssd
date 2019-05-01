@@ -27,6 +27,7 @@ Route::get('/bedeveloper', 'pagescontroller@devv');
 Route::get('/bedeveloperpage', 'pagescontroller@bedeveloperpage');
 
 Route::get('/search', 'GamesController@search');
+// Route::get('/SearchByGamesCategories', 'GamesController@SearchByGamesCategories');
 
 Auth::routes();
 Route::get('/contact', 'ContactFormController@create');
@@ -43,7 +44,7 @@ Route::get('/games/indexAdmin' , 'GamesController@indexAdmin');
 //Route::get('/approvegames' , 'GamesController@approvegame');
 
 Route::get('/games/{flag}/indexAdmin', ['as' => 'indexAdmin', 'uses' => 'GamesController@indexAdmin']);
-
+Route::get('/games/{cat}/SearchByGamesCategories', ['as' => 'SearchByGamesCategories', 'uses' => 'GamesController@SearchByGamesCategories']);
 
 Route::post('destroyAdmin/{id}', ['as' => 'destroyAdmin', 'uses' => 'GamesController@destroyAdmin']);
 Route::post('approve/{id}', ['as' => 'approvegames', 'uses' => 'GamesController@approve']);

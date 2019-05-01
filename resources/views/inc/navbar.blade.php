@@ -29,7 +29,27 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/games') }}">Games</a>
+                            
                         </li>
+
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Categories <span class="caret"></span>
+                            </a>
+                            
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a href="{{ url('/games/ac/SearchByGamesCategories') }}" class="dropdown-item">Action</a>  
+                                <a href="{{ url('/games/fps/SearchByGamesCategories') }}" class="dropdown-item">FPS</a>
+                                <a href="{{ url('/games/ho/SearchByGamesCategories') }}" class="dropdown-item">Horror</a>
+                                <a href="{{ url('/games/th/SearchByGamesCategories') }}" class="dropdown-item">thirdPerson</a>
+                          
+                            
+                             
+                            </div>
+                        </li>
+                        
 
 
                     @else
@@ -48,6 +68,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/games') }}">Games</a>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Categories <span class="caret"></span>
+                            </a>
+                            
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a href="{{ url('/games/ac/SearchByGamesCategories') }}" class="dropdown-item" >Action</a>  
+                                <a href="{{ url('/games/fps/SearchByGamesCategories') }}" class="dropdown-item">FPS</a>
+                                <a href="{{ url('/games/ho/SearchByGamesCategories') }}" class="dropdown-item">Horror</a>
+                                <a href="{{ url('/games/th/SearchByGamesCategories') }}" class="dropdown-item">thirdPerson</a>
+                          
+                            
+                            </div>
+                        </li>
+                        
 
 
                     @if (Auth::user()->type == 'user' )

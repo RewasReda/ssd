@@ -53,6 +53,32 @@ class GamesController extends Controller
         $games = Game::where('title','like','%'.$search.'%')->paginate(5);
         return view('games.index')->with('games', $games);
     }
+
+    public function SearchByGamesCategories($cat)
+    {
+       if($cat == "ac"){    
+        $games = Game::where('category','=','Action')->paginate(10);
+        return view('games.index')->with('games', $games);
+       }
+       else if($cat == "fps"){
+        $games = Game::where('category','=','FPS')->paginate(5);
+        return view('games.index')->with('games', $games);
+       }
+        else if($cat == "th"){
+            $games = Game::where('category','=','Third_Person')->paginate(5);
+            return view('games.index')->with('games', $games);
+        }   
+           else  if($cat == "ho"){
+                $games = Game::where('category','=','Horror')->paginate(5);
+                return view('games.index')->with('games', $games);
+           }
+                
+
+
+    }
+
+    
+
     //    public function index()
     // {
     //     $createFactory = new CreateFactory;

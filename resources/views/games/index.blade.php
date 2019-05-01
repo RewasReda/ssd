@@ -7,7 +7,6 @@
 }
 </style>
 @section('content')
-    <h1>this is games</h1>
     @if (count ($games) > 0)
         <form action="/addToCart" method="POST">
             
