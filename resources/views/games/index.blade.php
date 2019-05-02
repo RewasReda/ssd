@@ -7,7 +7,13 @@
 }
 </style>
 @section('content')
+@if(Request::server('HTTP_REFERER') == 'http://127.0.0.1:8000/addToCart')
+    <div class="alert alert-success" role="alert">
+        
+    </div>
+@endif
     @if (count ($games) > 0)
+    
         <form action="/addToCart" method="POST">
             
             @csrf

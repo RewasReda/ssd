@@ -9,23 +9,28 @@ use Storage;
 use App\Http\Controllers\GamesBuilderController;
 use App\classes\CreateFacade;
 use App\classes\GamesFactory;
-
-
-
+use App\cart;
+use Auth;
 
 class GamesController extends Controller
 {
 
     public function add_to_cart(Request $request){
         $allData = $request->all();
-        dd($allData);
+        $allGames = [];
+        $allIndex = [];
         foreach($allData as $oneSelect=>$value){
             if(is_numeric($oneSelect)){
-                cart::create([
-                    'user_id'=>Auth::User()->id,
-                    'game_id'=>$oneSelect
-                ]);
+                $gamesData  = Game::getGameByGameId($oneSelect);
+                $allGames[]   = $gamesData[0];
+                $allIndex[] = $oneSelect;
             }
+        }
+        if(sizeof($allGames)>0){
+            return view('games.addtocart',[
+                "games" => $allGames,
+                "all"   => $allIndex
+            ]);
         }
         return back();
     }
@@ -271,5 +276,19 @@ class GamesController extends Controller
         $showgame = $gamesfactory->gettype($flag);
         return $showgame->games();
         
+    }
+
+    public function finish_cart(Request $request){
+        $allData =  $request->all();
+        for($i=0;$i<sizeof($allData);$i++){
+            if((int)$request[strval($i)] != 0){
+                cart::create([
+                    'user_id'=>Auth::User()->id,
+                    'game_id'=>(int)$request[strval($i)]
+                ]);
+            }
+        }
+        return redirect('/games')->with('lol','hEEEEE');
+        //dd($request);
     }
 }

@@ -14,27 +14,18 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->unsignedBigInteger('id');
             $table->string('name');
             $table->string('email');
             $table->text('body');
-            $table->integer('game_id')->unsigned();
+            $table->unsignedBigInteger('game_id')->unsigned();
             $table->timestamps();
-        });
-        Schema::table('reviews',function($table)
-        {
-            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+            $table->foreign('game_id')->references('id')->on('games');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropForeihn(['game_id']);
         Schema::dropIfExists('reviews');
     }
 }

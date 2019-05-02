@@ -20,4 +20,9 @@ class Game extends Model
     // public function review(){
     //     return $this->belongsTo('App\User');
     // }
+
+    public static function getGameByGameId( $gameId ){
+        return Game::where('id', $gameId)->get();
+
+    }
 }
